@@ -24,14 +24,15 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
             nombresEstados[3] = new State("S3", false);
             nombresEstados[4] = new State("S4", true);
 
-            this.transiciones = new Transicion[7];
+            this.transiciones = new Transicion[8];
             transiciones[0] = new Transicion('/', "S0", "S1");
             transiciones[1] = new Transicion('*', "S1", "S2");
             transiciones[2] = new Transicion('#', "S2", "S2");
             transiciones[3] = new Transicion('$', "S2", "S2");
-            transiciones[4] = new Transicion(' ', "S2", "S2");
-            transiciones[5] = new Transicion('*', "S2", "S3");
-            transiciones[6] = new Transicion('/', "S3", "S4");
+            transiciones[4] = new Transicion('\n', "S2", "S2");
+            transiciones[5] = new Transicion('e', "S2", "S2");
+            transiciones[6] = new Transicion('*', "S2", "S3");
+            transiciones[7] = new Transicion('/', "S3", "S4");
 
         }
     }

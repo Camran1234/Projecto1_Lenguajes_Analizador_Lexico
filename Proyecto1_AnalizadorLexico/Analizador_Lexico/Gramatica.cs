@@ -31,6 +31,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         /// <returns></returns>
         public int ComprobarToken(char caracter)
         {
+            //Se analiza segun la cantidad de transiciones
             for(int indexTransiciones=0; indexTransiciones<transiciones.Length; indexTransiciones++)
             {
                 if (transiciones[indexTransiciones].ProveChar(caracter,estadoActual)==true)
