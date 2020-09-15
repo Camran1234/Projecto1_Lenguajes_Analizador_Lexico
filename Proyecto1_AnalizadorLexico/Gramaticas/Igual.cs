@@ -13,7 +13,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
         {
             this.nombre = "Igual";
             this.MakeStatesAndTransition();
-        }
+        }   
 
         public override void MakeStatesAndTransition()
         {

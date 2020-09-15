@@ -22,6 +22,11 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
             nombreEstadoInicial = EstadoInicial;
         }
 
+        public string GetStartState()
+        {
+            return nombreEstadoInicial;
+        }
+
         public string GetLastState()
         {
             return nombreEstadoFinal;

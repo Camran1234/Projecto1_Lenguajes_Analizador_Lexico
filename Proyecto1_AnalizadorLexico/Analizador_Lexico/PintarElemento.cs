@@ -11,6 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
     class PintarElemento
     {
         private RichTextBox richTextBox;
+
         /// <summary>
         /// Clase que nos sirve para pintar el texto de la instancia de RichTextBox a cierto color 
         /// </summary>
@@ -24,7 +25,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         {
             //Seleccionamos en el objeto la posicion y tamaño de lo que queremos cambiar de color
             richTextBox.Select(index,token.Length);
-            Color color = Color.White;
+            Color color = Color.Black;
             //Asignamos el color dado segun el token dado
             switch (token)
             {

@@ -24,24 +24,27 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         /// <summary>
         /// Retorna 0 si no entro a la gramatica del automata
         /// Retorna 1 si el automata llego al estado final
-        /// Retorna 2 si se el caracter entro al analisis del automata
+        /// Retorna 2 si se el caracter entro al analisis del automata o se sigue analizando
         /// Retorna 3 si durante el analisis del automata se encuentra un caracter que no pertenece
         /// y que no avanza en el estado
         /// </summary>
         /// <returns></returns>
         public int ComprobarToken(char caracter)
         {
+            int estadoAnalizando = 0;
+
             //Se analiza segun la cantidad de transiciones
             for(int indexTransiciones=0; indexTransiciones<transiciones.Length; indexTransiciones++)
             {
                 if (transiciones[indexTransiciones].ProveChar(caracter,estadoActual)==true)
                 {
-                    if (estadoActual.Equals("S0"))
+                    if (estados[indexTransiciones].GetStateType()==false && estados[indexTransiciones + 1].GetStateType() == false)
                     {
                         estadoActual = transiciones[indexTransiciones].GetLastState();
                         return 2;
-                    }else if (estadoActual.Equals(transiciones[indexTransiciones]))
+                    }else if (estados[indexTransiciones+1].GetStateType()==true)
                     {
+                        estadoActual = "S0";
                         return 1;
                     }
                 }else
@@ -49,7 +52,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     if (estadoActual.Equals("S0"))
                     {
                         return 0;
-                    }else if (estadoActual.Equals(transiciones[indexTransiciones]))
+                    }else if(!estadoActual.Equals("S0") && indexTransiciones==transiciones.Length-1)
                     {
                         estadoActual = "S0";
                         return 3;
@@ -71,5 +74,9 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             return this.estadoActual;
         }
 
+        public void resetState()
+        {
+            estadoActual = "S0";
+        }
     }
 }

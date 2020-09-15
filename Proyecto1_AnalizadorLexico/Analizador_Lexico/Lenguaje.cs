@@ -16,9 +16,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         //la variable lengthOfToken se utilizara para usar el metodo de richTextBox Select que seleccionaremos esa parte
         //luego con SelectColor cambiamos el color
         private InfoGramatica[] gramaticas = new InfoGramatica[34];
-        private string tokenFormado;
-        private int indexPosicionToken;
-        private int lengthOfToken;
+        
 
         /// <summary>
         /// Establece un automata donde contenedremos todas las gramaticas clases que se establecieron
