@@ -24,7 +24,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         {
             //Seleccionamos en el objeto la posicion y tamaño de lo que queremos cambiar de color
             richTextBox.Select(index,token.Length);
-            Color color = Color.Crimson;
+            Color color = Color.White;
             //Asignamos el color dado segun el token dado
             switch (token)
             {

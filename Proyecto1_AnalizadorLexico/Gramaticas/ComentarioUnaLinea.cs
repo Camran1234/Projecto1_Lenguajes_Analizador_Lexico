@@ -22,7 +22,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
             nombresEstados[1] = new State("S1", false);
             nombresEstados[2] = new State("S2", true);
 
-            this.transiciones = new Transicion[4];
+            this.transiciones = new Transicion[5];
             transiciones[0] = new Transicion('/', "S0", "S1");
             transiciones[1] = new Transicion('/', "S1", "S2");
             transiciones[2] = new Transicion('#', "S2", "S2");

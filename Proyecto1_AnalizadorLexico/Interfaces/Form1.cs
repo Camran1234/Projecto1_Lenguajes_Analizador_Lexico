@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proyecto1_AnalizadorLexico.Analizador_Lexico;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,13 @@ namespace Proyecto1_AnalizadorLexico
 {
     public partial class Form1 : Form
     {
-        int indexColor = -1;
-        string cadena="";
+        private int indexColor = -1;
+        private string cadena="";
+        private Lectura lectura;
         public Form1()
         {
             InitializeComponent();
+            lectura = new Lectura(this.richTextBoxCuadro);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -24,13 +27,15 @@ namespace Proyecto1_AnalizadorLexico
             try
             {
                 
-                string a = "Hola";
                 string texto = richTextBoxCuadro.Text;
+                
 
-                int index=-1;
-                int length = 0;
+                for(int i=0; i < texto.Length; i++)
+                {
+                    lectura.Leer(texto[i],i);
+                }
 
-                for (int i = 0; i < texto.Length; i++)
+                /*for (int i = 0; i < texto.Length; i++)
                 {
                     //Hola mundo como estas el dia de hoy, hola sol, Hola a todos, HolaMundo
                     
@@ -65,9 +70,8 @@ namespace Proyecto1_AnalizadorLexico
                 }
 
                 cadena = "";
-                index = -1;
-            }
-            catch (Exception es)
+                index = -1;*/
+            }catch (Exception es)
             {
                 MessageBox.Show("Error: " + es.Message) ;
             }

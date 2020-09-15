@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,12 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         private string cadena = "";
         private Lenguaje lenguaje = new Lenguaje();
         private int index;
+        //indexGramaticaAnalizada nos indica la posicion de la gramatica para indicar el nombre del token
+        private int indexGramaticaAnalizada = -1;
         private Gramatica[] gramatica;
-        private string estado = "";
+        private string estadoAnalizado = "";
         private PintarElemento pintador;
-
+        
         /// <summary>
         /// Objeto para la lectura de caracteres y decide si pintara algun token
         /// </summary>
@@ -29,12 +32,42 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             }
         }
 
-        public void Leer(char caracter, int index)
+        public void Leer(char caracter, int indexActual)
         {
-
+            ArrayList listStates = new ArrayList();
+            int resultado;
             for(int indexGramatica=0;indexGramatica<gramatica.Length; indexGramatica++)
             {
-                gramatica[indexGramatica].ComprobarToken(caracter);
+                resultado = gramatica[indexGramatica].ComprobarToken(caracter);
+                if (resultado == 0)
+                {
+                       
+                }else if (resultado == 1)
+                {
+                    //Pintamos el nombre de la gramatica
+                    pintador.pintarTexto(gramatica[indexGramatica].GetName(),index);
+                    estadoAnalizado = "";
+                    index = -1;
+                    break;
+                }else if (resultado == 2)
+                {
+                    //Indica que se trabajara este estado
+                    estadoAnalizado = gramatica[indexGramatica].GetActualState();
+                    index = indexActual;
+                    break;
+                }
+                else if (resultado == 3)
+                {
+                    //Cuando se encuentra un error durante el automata
+                    pintador.pintarTexto("",index);
+                    estadoAnalizado = "";
+                    index = -1;
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrio un error al analizar el caracter");
+                }
+                
             }
         }
     }

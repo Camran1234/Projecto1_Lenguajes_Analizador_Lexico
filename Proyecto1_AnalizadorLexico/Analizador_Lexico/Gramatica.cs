@@ -44,8 +44,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     {
                         return 1;
                     }
-                }
-                else
+                }else
                 {
                     if (estadoActual.Equals("S0"))
                     {
@@ -62,6 +61,15 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             return 0;
         }
 
+        public string GetName()
+        {
+            return this.nombreGramatica;
+        }
         
+        public string GetActualState()
+        {
+            return this.estadoActual;
+        }
+
     }
 }
