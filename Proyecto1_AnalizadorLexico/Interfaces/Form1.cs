@@ -19,20 +19,22 @@ namespace Proyecto1_AnalizadorLexico
         public Form1()
         {
             InitializeComponent();
-            lectura = new Lectura(this.richTextBoxCuadro);
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                
+                lectura = new Lectura(this.richTextBoxCuadro);
                 string texto = richTextBoxCuadro.Text;
-                
-
+                char chars;
                 for(int i=0; i < texto.Length; i++)
                 {
+                    
                     lectura.Leer(texto[i],i);
+                    //chars = texto[i];
+                    //MessageBox.Show("'"+chars+"'");
                 }
 
                 /*for (int i = 0; i < texto.Length; i++)
@@ -73,7 +75,7 @@ namespace Proyecto1_AnalizadorLexico
                 index = -1;*/
             }catch (Exception es)
             {
-                MessageBox.Show("Error: " + es.Message) ;
+                MessageBox.Show("Error: " + es.StackTrace + "\n Otro error: "+es.Message) ;
             }
             
 
@@ -87,6 +89,11 @@ namespace Proyecto1_AnalizadorLexico
 
 
 
+        }
+
+        private void richTextBoxCuadro_TextChanged(object sender, EventArgs e)
+        {
+            //richTextBoxCuadro.SelectionColor = Color.Black;
         }
     }
 }

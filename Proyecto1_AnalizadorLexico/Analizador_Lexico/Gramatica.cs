@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 {
@@ -13,7 +14,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         private State[] estados;
         private Transicion[] transiciones;
         private string estadoActual = "S0";
-
+        private int estadoNo = 0;
+        private string siguienteEstado;
         public Gramatica(InfoGramatica gramatica)
         {
             nombreGramatica = gramatica.GetName();
@@ -31,38 +33,94 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         /// <returns></returns>
         public int ComprobarToken(char caracter)
         {
-            int estadoAnalizando = 0;
-
+            bool comprobacionCaracter=false;
             //Se analiza segun la cantidad de transiciones
+            
             for(int indexTransiciones=0; indexTransiciones<transiciones.Length; indexTransiciones++)
             {
-                if (transiciones[indexTransiciones].ProveChar(caracter,estadoActual)==true)
+                if (transiciones[indexTransiciones].GetStartState().Equals(estadoActual))
                 {
-                    if (estados[indexTransiciones].GetStateType()==false && estados[indexTransiciones + 1].GetStateType() == false)
+                    comprobacionCaracter = transiciones[indexTransiciones].ProveChar(caracter, estadoActual);
+                    if (comprobacionCaracter == true)
                     {
-                        estadoActual = transiciones[indexTransiciones].GetLastState();
-                        return 2;
-                    }else if (estados[indexTransiciones+1].GetStateType()==true)
-                    {
-                        estadoActual = "S0";
-                        return 1;
+                        try
+                        {
+                            if (estados[indexTransiciones].GetStateType() == false && estados[indexTransiciones + 1].GetStateType() == false)
+                            {
+                                if (estadoNo < estados.Length - 1)
+                                {
+                                    estadoNo++;
+                                }
+
+                                estadoActual = transiciones[indexTransiciones].GetLastState();
+                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
+                                return 2;
+                            }
+                            else if (estados[indexTransiciones + 1].GetStateType() == true)
+                            {
+                                if (estadoNo < estados.Length - 1)
+                                {
+                                    estadoNo++;
+                                }
+                                estadoActual = transiciones[indexTransiciones].GetLastState();
+                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
+                                return 1;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            if (estados[estadoNo].GetStateType() == false)
+                            {
+
+                                if (estadoNo < estados.Length - 1)
+                                {
+                                    estadoNo++;
+                                }
+                                estadoActual = transiciones[indexTransiciones].GetLastState();
+                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
+                                return 2;
+                            }
+                            else if (estados[estadoNo].GetStateType() == true)
+                            {
+                                if (estadoNo < estados.Length - 1)
+                                {
+                                    estadoNo++;
+                                }
+                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
+                                return 1;
+                            }
+                        }
+
+
                     }
-                }else
-                {
-                    if (estadoActual.Equals("S0"))
+                    else
                     {
-                        return 0;
-                    }else if(!estadoActual.Equals("S0") && indexTransiciones==transiciones.Length-1)
-                    {
-                        estadoActual = "S0";
-                        return 3;
+                        if (estadoActual.Equals("S0"))
+                        {
+                            return 0;
+                        }
+                        else if (!estadoActual.Equals("S0") && indexTransiciones == transiciones.Length - 1)
+                        {
+                            estadoActual = "S0";
+                            siguienteEstado = "S0";
+                            estadoNo = 0;
+                            return 3;
+                        }
                     }
                 }
+                    
                 
             }
 
             return 0;
         }
+
+        public void upState()
+        {
+            estadoActual = siguienteEstado;
+
+        }
+
 
         public string GetName()
         {
@@ -77,6 +135,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         public void resetState()
         {
             estadoActual = "S0";
+            estadoNo = 0;
         }
     }
 }

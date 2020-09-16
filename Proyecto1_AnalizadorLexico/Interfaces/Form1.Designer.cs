@@ -40,6 +40,7 @@
             this.richTextBoxCuadro.Size = new System.Drawing.Size(1133, 455);
             this.richTextBoxCuadro.TabIndex = 1;
             this.richTextBoxCuadro.Text = "";
+            this.richTextBoxCuadro.TextChanged += new System.EventHandler(this.richTextBoxCuadro_TextChanged);
             // 
             // panel1
             // 

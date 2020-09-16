@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
 {
@@ -58,16 +59,16 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
 
             if (estadoActual.Equals(nombreEstadoInicial))
             {
-                if (this.caracterApuntador == '#')
+                if(caracterApuntador=='$' || caracterApuntador == '#' || caracterApuntador==' ' || caracterApuntador=='\n')
                 {
-                    if (caracter >= 65 && caracter <= 90)
+                    if (caracter >= 97 && caracter <= 122)
+                    {
+                        return true;
+                    }else if (caracter >= 65 && caracter <= 90)
                     {
                         return true;
                     }
-                }
-                else if (this.caracterApuntador == '$')
-                {
-                    if (caracter >= 97 && caracter <= 122)
+                    else
                     {
                         return true;
                     }

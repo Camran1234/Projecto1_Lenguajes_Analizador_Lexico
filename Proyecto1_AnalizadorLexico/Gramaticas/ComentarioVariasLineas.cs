@@ -30,7 +30,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
             transiciones[2] = new Transicion('#', "S2", "S2");
             transiciones[3] = new Transicion('$', "S2", "S2");
             transiciones[4] = new Transicion('\n', "S2", "S2");
-            transiciones[5] = new Transicion('e', "S2", "S2");
+            transiciones[5] = new Transicion(' ', "S2", "S2");
             transiciones[6] = new Transicion('*', "S2", "S3");
             transiciones[7] = new Transicion('/', "S3", "S4");
 

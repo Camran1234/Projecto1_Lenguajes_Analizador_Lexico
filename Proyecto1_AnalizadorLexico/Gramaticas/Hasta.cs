@@ -25,7 +25,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
             nombresEstados[4] = new State("S4", false);
             nombresEstados[5] = new State("S5", true);
 
-            this.transiciones = new Transicion[8];
+            this.transiciones = new Transicion[5];
             transiciones[0] = new Transicion('H', "S0", "S1");
             transiciones[1] = new Transicion('A', "S1", "S2");
             transiciones[2] = new Transicion('S', "S2", "S3");
