@@ -54,12 +54,10 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
         /// </summary>
         /// <param name="caracter"></param>
         /// <returns></returns>
-        public bool ProveChar(char caracter, string estadoActual)
+        public bool ProveChar(char caracter)
         {
-
-            if (estadoActual.Equals(nombreEstadoInicial))
-            {
-                if(caracterApuntador=='$' || caracterApuntador == '#' || caracterApuntador==' ' || caracterApuntador=='\n')
+            //Si hay minusculas o mayusculas o espacios libres o saltos de linea analizara esto
+                if(caracterApuntador=='$' || caracterApuntador == '#' )
                 {
                     if (caracter >= 97 && caracter <= 122)
                     {
@@ -68,21 +66,16 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
                     {
                         return true;
                     }
-                    else
-                    {
-                        return true;
-                    }
+                    
                 }
                 else
                 {
+                //Si el caracter enviado es el mismo con el que apunta al siguiente caracter
                     if (this.caracterApuntador == caracter)
                     {
                         return true;
                     }
                 }
-            }
-
-            
             return false;
         }
 

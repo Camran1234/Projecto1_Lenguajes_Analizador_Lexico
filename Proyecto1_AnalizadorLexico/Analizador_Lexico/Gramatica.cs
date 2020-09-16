@@ -14,8 +14,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         private State[] estados;
         private Transicion[] transiciones;
         private string estadoActual = "S0";
-        private int estadoNo = 0;
-        private string siguienteEstado;
+        private int lastTransition = 0;
+        bool posiblesTransicionesRepetidas = false;
         public Gramatica(InfoGramatica gramatica)
         {
             nombreGramatica = gramatica.GetName();
@@ -34,64 +34,70 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         public int ComprobarToken(char caracter)
         {
             bool comprobacionCaracter=false;
+            bool retornarError = false;
             //Se analiza segun la cantidad de transiciones
             
-            for(int indexTransiciones=0; indexTransiciones<transiciones.Length; indexTransiciones++)
+            for(int indexTransiciones=lastTransition; indexTransiciones<transiciones.Length; indexTransiciones++)
             {
                 if (transiciones[indexTransiciones].GetStartState().Equals(estadoActual))
                 {
-                    comprobacionCaracter = transiciones[indexTransiciones].ProveChar(caracter, estadoActual);
+
+                    try
+                    {
+                        if (transiciones[indexTransiciones - 1].GetLastState() == transiciones[indexTransiciones].GetLastState())
+                        {
+                            posiblesTransicionesRepetidas = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+
+                    //Se comprueba si el caracter pertenece a la transicion, verdadero si si pertenece, falso si no
+                    comprobacionCaracter = transiciones[indexTransiciones].ProveChar(caracter);
                     if (comprobacionCaracter == true)
                     {
-                        try
+                        
+                        
+                        
+                            //Colocamos de que el estado actual de esta gramatica es el ultimo analizado en la transicion
+                            estadoActual = transiciones[indexTransiciones].GetLastState();
+
+
+                        //Si este estado no es final
+                        if (this.checkIfActualStateIsFinal(estadoActual) == false)
                         {
-                            if (estados[indexTransiciones].GetStateType() == false && estados[indexTransiciones + 1].GetStateType() == false)
+                            if (posiblesTransicionesRepetidas == false)
                             {
-                                if (estadoNo < estados.Length - 1)
-                                {
-                                    estadoNo++;
-                                }
+                                lastTransition++;
+                                indexTransiciones = lastTransition;
+                            }
 
-                                estadoActual = transiciones[indexTransiciones].GetLastState();
-                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
-                                return 2;
-                            }
-                            else if (estados[indexTransiciones + 1].GetStateType() == true)
+                            //Hacemos el brinco de transiciones cuando detecte una que ya no sea diferente a la anterior
+                            if (posiblesTransicionesRepetidas == true && transiciones[indexTransiciones - 1].GetLastState() != transiciones[indexTransiciones].GetLastState())
                             {
-                                if (estadoNo < estados.Length - 1)
-                                {
-                                    estadoNo++;
-                                }
-                                estadoActual = transiciones[indexTransiciones].GetLastState();
-                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
-                                return 1;
+                                //Aumentamos por uno
+                                lastTransition = indexTransiciones;
+                                posiblesTransicionesRepetidas = false;
                             }
+
+
+                            return 2;
                         }
-                        catch (Exception e)
+                        else
                         {
-                            if (estados[estadoNo].GetStateType() == false)
+                            if (!nombreGramatica.Equals("ComentarioUnaLinea"))
                             {
-
-                                if (estadoNo < estados.Length - 1)
+                                if (lastTransition != transiciones.Length - 1)
                                 {
-                                    estadoNo++;
+                                    lastTransition++;
                                 }
-                                estadoActual = transiciones[indexTransiciones].GetLastState();
-                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
-                                return 2;
                             }
-                            else if (estados[estadoNo].GetStateType() == true)
-                            {
-                                if (estadoNo < estados.Length - 1)
-                                {
-                                    estadoNo++;
-                                }
-                                siguienteEstado = transiciones[indexTransiciones].GetLastState();
-                                return 1;
-                            }
+                            return 1;
                         }
-
-
+                        
                     }
                     else
                     {
@@ -99,28 +105,37 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         {
                             return 0;
                         }
-                        else if (!estadoActual.Equals("S0") && indexTransiciones == transiciones.Length - 1)
+                        else if (estadoActual.Equals("S0") == false && indexTransiciones == transiciones.Length-1)
                         {
-                            estadoActual = "S0";
-                            siguienteEstado = "S0";
-                            estadoNo = 0;
                             return 3;
                         }
+                        retornarError = true;
                     }
+
                 }
-                    
-                
+            }
+
+            if(retornarError == true)
+            {
+                return 3;
+            }
+
+            //Indica que si no hay mas transiciones entonces retornara que es un error
+            if (lastTransition == transiciones.Length - 1)
+            {
+                return 3;
             }
 
             return 0;
         }
 
-        public void upState()
+
+        public void resetState()
         {
-            estadoActual = siguienteEstado;
-
+            estadoActual = "S0";
+            lastTransition = 0;
+            posiblesTransicionesRepetidas = false;
         }
-
 
         public string GetName()
         {
@@ -132,10 +147,24 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             return this.estadoActual;
         }
 
-        public void resetState()
+
+        /// <summary>
+        /// Devuelve si era un estado final o no
+        /// True si era estado final
+        /// False si no era estado final
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public bool checkIfActualStateIsFinal(String state)
         {
-            estadoActual = "S0";
-            estadoNo = 0;
+            if (state.Equals(estados[estados.Length - 1].GetName()) && estados[estados.Length -1].GetStateType()==true)
+            {
+                return true;
+            }
+
+            return false;
         }
+
+       
     }
 }

@@ -21,9 +21,9 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             this.richTextBox = richTextBox;
         }
 
-        public void pintarTexto(string token,int index)
+        public void pintarTexto(string token, string cadena,int index)
         {
-            int sizeToken = token.Length;
+            int sizeToken = cadena.Length;
             Color color = Color.Black;
             //Asignamos el color dado segun el token dado
             switch (token)
@@ -58,14 +58,15 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         color = Color.Green;
                     }else if (token.Equals("ComentarioUnaLinea") || token.Equals("ComentarioVariasLineas"))
                     {
+                        sizeToken = cadena.Length;
                         color = Color.Red;
-                    }else if (token.Equals("Suma") || token.Equals("Resta") || token.Equals("Multiplicacion") || token.Equals("Division")|| token.Equals("Mayor") || token.Equals("Menor")  || token.Equals("Or") || token.Equals("And") || token.Equals("Negacion")
+                    }else if (token.Equals("Suma") || token.Equals("Resta") || token.Equals("Multiplicacion") || token.Equals("Division")|| token.Equals("Mayor") || token.Equals("Menor")  
                         || token.Equals("ParentesisAbrir") || token.Equals("ParentesisCerrar"))
                     {
                         sizeToken = 1;
                         color = Color.Blue;
                     }else if(token.Equals("Incrementar") || token.Equals("Disminuir") || token.Equals("MayorIgual") || token.Equals("MenorIgual")
-                        || token.Equals("Comparacion") || token.Equals("Diferente"))
+                        || token.Equals("Comparacion") || token.Equals("Diferente") || token.Equals("Or") || token.Equals("And") || token.Equals("Negacion"))
                     {
                         sizeToken = 2;
                         color = Color.Blue;
