@@ -21,7 +21,7 @@ namespace Proyecto1_AnalizadorLexico
         public FormEntorno()
         {
             InitializeComponent();
-            
+            panelAnalizador.Visible=false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,7 +61,10 @@ namespace Proyecto1_AnalizadorLexico
 
         private void richTextBoxCuadro_TextChanged(object sender, EventArgs e)
         {
-            
+            //Sintaxis para que cuando se mueva por cualquier parte lo que se escriba siempre sera negro
+            int actualIndex = richTextBoxCuadroCompilacion.SelectionStart;
+            richTextBoxCuadroCompilacion.Select(actualIndex, 0);
+            richTextBoxCuadroCompilacion.SelectionColor = Color.Black;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -81,7 +84,7 @@ namespace Proyecto1_AnalizadorLexico
                 new ManipuladorArchivo().createFile(textoErrores, path,true);
             }
             
-            //Mostramos el cuadro de seleccion
+            
         }
 
         private void richTextBoxCuadroError_TextChanged(object sender, EventArgs e)
@@ -114,6 +117,7 @@ namespace Proyecto1_AnalizadorLexico
             MostradorPosicion mostrador = new MostradorPosicion();
             labelFila.Text = (mostrador.GetRow(this.richTextBoxCuadroCompilacion));
             labelColumna.Text = (mostrador.GetCols(this.richTextBoxCuadroCompilacion));
+
         }
 
         private void panelAnalizador_Paint(object sender, PaintEventArgs e)
@@ -124,6 +128,73 @@ namespace Proyecto1_AnalizadorLexico
         private void labelColumna_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void buttonSeleccionarProyecto_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog buscador = new FolderBrowserDialog();
+            DialogResult resultado = buscador.ShowDialog();
+            string path = buscador.SelectedPath;
+            if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(path))
+            {
+                new ManipuladorTreeView().ChargeTreeView(path,this.treeView1);
+            }
+        }
+
+        /// <summary>
+        /// Evento para mostrar archivo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            try
+            {
+                //Obtenemos la path de nuestro archivo
+                string path = treeView1.SelectedNode.FullPath.ToString();
+                
+                string texto = new ManipuladorTreeView().CharSelectedFile(path, treeView1);
+                //Verificamos que si halla encontrado el archivo
+                //De lo contrario no mostrara nada
+                if (!texto.Equals(null)) 
+                {
+                    //Obtenemos el texto del arbol seleccionado 
+                    richTextBoxCuadroCompilacion.Text = texto;
+                    //Mostramos el panel donde esta el analizador
+                    panelAnalizador.Visible = true;
+                }
+                else
+                {
+                    panelAnalizador.Visible = false;
+                    richTextBoxCuadroCompilacion.Text = "";
+                }
+                
+            }
+            catch (IOException excep)
+            {
+                MessageBox.Show("Error: " + excep.Message);
+            }
+        }
+
+        private void buttonGuardar_Click(object sender, EventArgs e)
+        {
+            //Obtenemos el texto del cuadro de errores
+            string textoNuevo = richTextBoxCuadroCompilacion.Text;
+            //Obtenemos la path del archivo desde el nodo que seleccionamos la ultima vez
+            string path = treeView1.SelectedNode.FullPath.ToString();
+
+            //Verificamos que el usuario le halla dado en ok y que la path no sea nula o tenga espacios en blanco
+            try
+            {
+                //Guardamos el archivo
+                new ManipuladorArchivo().createFile(textoNuevo, path, false);
+                MessageBox.Show("ARCHIVO " + Path.GetFileName(path) + " guardado");
+            }
+            catch (IOException Exc)
+            {
+                MessageBox.Show("Error: No se pudo guardar el archivo "+Exc.Message);
+            }
+                
         }
     }
 }

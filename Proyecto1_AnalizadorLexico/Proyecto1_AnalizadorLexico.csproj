@@ -52,6 +52,7 @@
     <Compile Include="Analizador_Lexico\PintarElemento.cs" />
     <Compile Include="Archivo\Error.cs" />
     <Compile Include="Archivo\ManipuladorArchivo.cs" />
+    <Compile Include="Archivo\ManipuladorTreeView.cs" />
     <Compile Include="Gramaticas\And.cs" />
     <Compile Include="Gramaticas\Boolean_.cs" />
     <Compile Include="Gramaticas\Cadena.cs" />

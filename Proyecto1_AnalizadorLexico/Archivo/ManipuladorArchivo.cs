@@ -29,6 +29,7 @@ namespace Proyecto1_AnalizadorLexico.Archivo
                 string originalPath = path;
                 if (opcion)
                 {
+                    //Orientado para generar los archivos de errores
                     //Creamos el nombre del archivo con la fecha del momento
                     string tiempo = DateTime.Now.ToString(new CultureInfo("en-US"));
                     //Quitamos las diagonales
@@ -38,9 +39,14 @@ namespace Proyecto1_AnalizadorLexico.Archivo
                     //Combinamos el nombre del path obtenido y le agregamos el nombre nuevo
                     path = System.IO.Path.Combine(path, fileName);
                 }
+                
+                    //Sino Orientado para guardar archivos o crearlos
+
+                
 
                 try
                 {
+                    //Analizaremos con un flujo binario y no de texto por cuestiones de simplificacion
                     //Creamos el archivo y abrimos el flujo    
                     FileStream archivoNuevo = File.Create(path);
                     
