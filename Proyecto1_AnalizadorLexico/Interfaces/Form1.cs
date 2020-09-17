@@ -1,9 +1,13 @@
 ﻿using Proyecto1_AnalizadorLexico.Analizador_Lexico;
+using Proyecto1_AnalizadorLexico.Archivo;
+using Proyecto1_AnalizadorLexico.Interfaces;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +15,10 @@ using System.Windows.Forms;
 
 namespace Proyecto1_AnalizadorLexico
 {
-    public partial class Form1 : Form
+    public partial class FormEntorno : Form
     {
-        private int indexColor = -1;
-        private string cadena="";
         private Lectura lectura;
-        public Form1()
+        public FormEntorno()
         {
             InitializeComponent();
             
@@ -26,74 +28,102 @@ namespace Proyecto1_AnalizadorLexico
         {
             try
             {
-                lectura = new Lectura(this.richTextBoxCuadro);
-                string texto = richTextBoxCuadro.Text;
-                char chars;
+                richTextBoxCuadroError.ResetText();
+                lectura = new Lectura(this.richTextBoxCuadroCompilacion);
+                string texto = richTextBoxCuadroCompilacion.Text;
+                //Leemos caracter por caracter y lo mandamos a nuestro objeto Lectura para que lo lea y establezca
+                //token, pinte caracteres, detectar errores entre otras medidas
                 for(int i=0; i < texto.Length; i++)
                 {
                     
                     lectura.Leer(texto[i],i);
-                    //chars = texto[i];
-                    //MessageBox.Show("'"+chars+"'");
                 }
-
-                /*for (int i = 0; i < texto.Length; i++)
-                {
-                    //Hola mundo como estas el dia de hoy, hola sol, Hola a todos, HolaMundo
-                    
-                    MessageBox.Show("Caracter: '" + texto[i] + "'");
-                    if (texto[i] == ' ' )
-                    {
-                        MessageBox.Show("Index: "+i);
-                        cadena = "";
-                        index = -1;
-                    }else if (texto[i] == '\n')
-                    {
-                        MessageBox.Show("Index:/n " + i);
-                        cadena = "";
-                        index = -1;
-                    }
-                    else
-                    {
-                        if (index == -1)
-                        {
-                            index = i;
-                        }
-
-                        cadena += texto[i];
-                        length = cadena.Length;
-                    }
-
-                    if (cadena.Equals("Hola"))
-                    {
-                        richTextBoxCuadro.Select(index, length);
-                        richTextBoxCuadro.SelectionColor = Color.BlueViolet;        
-                    }
-                }
-
-                cadena = "";
-                index = -1;*/
+                //Lanzamos el mensaje de error
+                this.throwErrorMessageFromLexicAnalyzer(lectura);
             }catch (Exception es)
             {
                 MessageBox.Show("Error: " + es.StackTrace + "\n Otro error: "+es.Message) ;
             }
-            
+        }
 
-            /*
-             * for(int index = 0; index < richTextBoxCuadro.TextLength; index++)
-                        {
-                            MessageBox.Show("La letra " + richTextBoxCuadro.GetCharFromPosition(richTextBoxCuadro.GetPositionFromCharIndex(index)) + " se encuentra en la posicion " + richTextBoxCuadro.GetPositionFromCharIndex(index));
-                        }
-             * 
-             * */
-
-
-
+        /// <summary>
+        /// Lanza los errores encontrados en el programa
+        /// </summary>
+        /// <param name="erroresLectura"></param>
+        private void throwErrorMessageFromLexicAnalyzer(Lectura erroresLectura)
+        {
+            string errorFraseInicial = "Errores: (" + erroresLectura.GetNoMistakes() + ") \n";
+            //Anexamos la cantidad de errores encontrados
+            richTextBoxCuadroError.AppendText(errorFraseInicial);
+            //Colocamos los errores y sus respectivas posiciones
+            richTextBoxCuadroError.AppendText(erroresLectura.GetErroresAsString());
         }
 
         private void richTextBoxCuadro_TextChanged(object sender, EventArgs e)
         {
-            //richTextBoxCuadro.SelectionColor = Color.Black;
+            
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            //Obtenemos el texto del cuadro de errores
+            string textoErrores = richTextBoxCuadroError.Text;
+            //Creamos un buscador de carpetas
+            FolderBrowserDialog carpeta = new FolderBrowserDialog();
+            //Obtenemos el resultado de la carpeta 
+            DialogResult resultado = carpeta.ShowDialog();
+            //Obtenemos la path de la carpeta
+            string path = carpeta.SelectedPath;
+
+            //Verificamos que el usuario le halla dado en ok y que la path no sea nula o tenga espacios en blanco
+            if(resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(path))
+            {
+                new ManipuladorArchivo().createFile(textoErrores, path,true);
+            }
+            
+            //Mostramos el cuadro de seleccion
+        }
+
+        private void richTextBoxCuadroError_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void richTextBoxCuadroCompilacion_LocationChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void richTextBoxCuadroCompilacion_CursorChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        /// <summary>
+        /// Este evento nos marcara siempre en que linea y posicion estamos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void richTextBoxCuadroCompilacion_SelectionChanged(object sender, EventArgs e)
+        {
+            MostradorPosicion mostrador = new MostradorPosicion();
+            labelFila.Text = (mostrador.GetRow(this.richTextBoxCuadroCompilacion));
+            labelColumna.Text = (mostrador.GetCols(this.richTextBoxCuadroCompilacion));
+        }
+
+        private void panelAnalizador_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void labelColumna_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

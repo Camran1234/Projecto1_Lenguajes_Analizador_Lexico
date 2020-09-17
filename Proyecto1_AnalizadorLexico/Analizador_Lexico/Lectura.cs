@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proyecto1_AnalizadorLexico.Archivo;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 {
     class Lectura
     {
+        private List<Error> errores = new List<Error>();
         private string cadena = "";
         private Lenguaje lenguaje = new Lenguaje();
         private int index = -1;
@@ -19,7 +21,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         private bool permisoParaPintar = true;
         private bool analizandoAutomatasEnAccion = false; 
         ArrayList posicionesAutomatasParaAvanzar = new ArrayList();
-
+        private RichTextBox richTextBox;
 
         /// <summary>
         /// Objeto para la lectura de caracteres y decide si pintara algun token
@@ -28,16 +30,39 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         {
             gramatica = new Gramatica[lenguaje.GetGramaticas().Length];
             pintador = new PintarElemento(richTextBox);
+            this.richTextBox = richTextBox;
             for(int indexLenguaje=0; indexLenguaje < lenguaje.GetGramaticas().Length; indexLenguaje++)
             {
                 gramatica[indexLenguaje] = new Gramatica(lenguaje.GetGramaticas()[indexLenguaje]);
             }
         }
 
+        /// <summary>
+        /// Obtiene todos los errores encontrados
+        /// </summary>
+        /// <returns></returns>
+        public string GetErroresAsString()
+        {
+            string erroresMensaje ="";
+            Error error;
+            for(int indexErrores = 0; indexErrores < errores.Count; indexErrores++)
+            {
+                errores.ToArray()[indexErrores].ChangeIndexToLine(richTextBox);
+                error = errores.ToArray()[indexErrores];
+                erroresMensaje += error.Message();
+            }
+            return erroresMensaje;
+        }
+
+        public int GetNoMistakes()
+        {
+            return errores.Count;
+        }
+
         public void Leer(char caracter, int indexActual)
         {
             int resultado = 0;
-            
+            bool permisoParaAgregarError = false;
             bool permisoAgregarCadena = false;
             ArrayList posicionAutomatasErroneos = new ArrayList();
             for (int indexGramatica=0;indexGramatica<gramatica.Length; indexGramatica++)
@@ -147,10 +172,6 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         else //Al no ser estado final pintaremos la cadena que es por el color negro y marcaremos como error
                         {
 
-                            //Codigo para indicar errores
-
-                            //
-                            
                             if(permisoParaPintar == true)
                             {
                                 pintador.pintarTexto(cadena, cadena, index);
@@ -163,8 +184,18 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 
                         if (posicionesAutomatasParaAvanzar.Count == posicionAutomatasErroneos.Count)
                         {
-                            index = -1;
-                            cadena = "";
+
+                            if (!gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores])].checkIfActualStateIsFinal(lastStateGramatics))
+                            {
+                                if (permisoParaAgregarError == false)
+                                {
+                                    errores.Add(new Error(cadena, gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores])].GetName(), index));
+                                }
+                                index = -1;
+                                cadena = "";
+                                permisoParaAgregarError = true;
+                            }
+                            
                         }
                         permisoParaPintar = true;
                     }
@@ -194,12 +225,18 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                 }
                 else if (finalStateReached==false && (posicionesAutomatasParaAvanzar.Count + posicionAutomatasErroneos.Count) == posicionAutomatasErroneos.Count)
                 {
+                    if (permisoParaAgregarError == false)
+                    {
+                        errores.Add(new Error(cadena, gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[0])].GetName(), index));
+                    }
                     //Si no alcanzo quiere decir que ninguno pinto porque nunca fue estado final entonces pintamos la cadena de negro y reiniciamos
                     //valores
                     pintador.pintarTexto(cadena, cadena, index);
                     index = -1;
                     cadena = "";
                     permisoParaPintar = true;
+                    
+                    
                 }
             }
 

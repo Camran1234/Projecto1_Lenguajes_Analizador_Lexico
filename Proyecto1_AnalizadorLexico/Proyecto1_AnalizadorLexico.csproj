@@ -50,6 +50,8 @@
     <Compile Include="Analizador_Lexico\Gramatica.cs" />
     <Compile Include="Analizador_Lexico\Lectura.cs" />
     <Compile Include="Analizador_Lexico\PintarElemento.cs" />
+    <Compile Include="Archivo\Error.cs" />
+    <Compile Include="Archivo\ManipuladorArchivo.cs" />
     <Compile Include="Gramaticas\And.cs" />
     <Compile Include="Gramaticas\Boolean_.cs" />
     <Compile Include="Gramaticas\Cadena.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Interfaces\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\MostradorPosicion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Interfaces\Form1.resx">
@@ -120,8 +123,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Archivo\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
