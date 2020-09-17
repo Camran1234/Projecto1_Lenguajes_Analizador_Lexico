@@ -18,10 +18,13 @@ namespace Proyecto1_AnalizadorLexico
     public partial class FormEntorno : Form
     {
         private Lectura lectura;
+        private string pathProyecto="";
         public FormEntorno()
         {
             InitializeComponent();
             panelAnalizador.Visible=false;
+            panelCrearArchivo.Visible = false;
+            panelCrearProyecto.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -135,6 +138,7 @@ namespace Proyecto1_AnalizadorLexico
             FolderBrowserDialog buscador = new FolderBrowserDialog();
             DialogResult resultado = buscador.ShowDialog();
             string path = buscador.SelectedPath;
+            pathProyecto = path;
             if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(path))
             {
                 new ManipuladorTreeView().ChargeTreeView(path,this.treeView1);
@@ -150,25 +154,11 @@ namespace Proyecto1_AnalizadorLexico
         {
             try
             {
+                //Reseteamos los errores
+                richTextBoxCuadroError.Text = "";
                 //Obtenemos la path de nuestro archivo
                 string path = treeView1.SelectedNode.FullPath.ToString();
-                
-                string texto = new ManipuladorTreeView().CharSelectedFile(path, treeView1);
-                //Verificamos que si halla encontrado el archivo
-                //De lo contrario no mostrara nada
-                if (!texto.Equals(null)) 
-                {
-                    //Obtenemos el texto del arbol seleccionado 
-                    richTextBoxCuadroCompilacion.Text = texto;
-                    //Mostramos el panel donde esta el analizador
-                    panelAnalizador.Visible = true;
-                }
-                else
-                {
-                    panelAnalizador.Visible = false;
-                    richTextBoxCuadroCompilacion.Text = "";
-                }
-                
+                this.MostrarArchivo(path);
             }
             catch (IOException excep)
             {
@@ -183,18 +173,201 @@ namespace Proyecto1_AnalizadorLexico
             //Obtenemos la path del archivo desde el nodo que seleccionamos la ultima vez
             string path = treeView1.SelectedNode.FullPath.ToString();
 
-            //Verificamos que el usuario le halla dado en ok y que la path no sea nula o tenga espacios en blanco
             try
             {
                 //Guardamos el archivo
                 new ManipuladorArchivo().createFile(textoNuevo, path, false);
-                MessageBox.Show("ARCHIVO " + Path.GetFileName(path) + " guardado");
+                MessageBox.Show("ARCHIVO " + Path.GetFileName(path) + " GUARDADO");
             }
             catch (IOException Exc)
             {
                 MessageBox.Show("Error: No se pudo guardar el archivo "+Exc.Message);
             }
                 
+        }
+
+        private void buttonEliminarArchivo_Click(object sender, EventArgs e)
+        {
+            if(treeView1.Nodes.Count!=0)
+            {
+                try
+                {
+                    //Obtenemos la path del archivo desde el nodo que seleccionamos la ultima vez
+                    string path = treeView1.SelectedNode.FullPath.ToString();
+                    //Eliminamos el archivo
+                    new ManipuladorArchivo().EliminarArchivo(path);
+                    MessageBox.Show("ARCHIVO ELIMINADO");
+                    panelAnalizador.Visible = false;
+                    
+                    //Reiniciamos el arbol
+                    new ManipuladorTreeView().ChargeTreeView(pathProyecto, this.treeView1);
+                }
+                catch (IOException Exc)
+                {
+                    MessageBox.Show("Error: No se pudo Eliminar el archivo " + Exc.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("SELECCIONE UN ARCHIVO DE PRIMERO");
+            }
+            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(treeView1.Nodes.Count != 0)
+            {
+                if (!pathProyecto.Equals(""))
+                {
+                    AparecerIntroduccionNombresArchivos();
+                }
+            }
+            else
+            {
+                MessageBox.Show("SELECCIONE UN PROYECTO DE PRIMERO");
+            }
+            
+        }
+
+        private void buttonCrearArchivo1_Click(object sender, EventArgs e)
+        {
+            if (treeView1.Nodes.Count != 0)
+            {
+                if (!string.IsNullOrWhiteSpace(textBoxNombreArchivo.Text) || !string.IsNullOrEmpty(textBoxNombreArchivo.Text))
+                {
+                    //Obtenemos el nombre del archivo nuevo
+                    string nombreArchivo = textBoxNombreArchivo.Text + ".gt";
+                    //Le agregamos el nombreArchivo al path del proyecto
+                    string pathArchivo = Path.Combine(pathProyecto, nombreArchivo);
+
+                    //Creamos el archivo
+                    new ManipuladorArchivo().createFile(null, pathArchivo, false);
+                    //Volvemos a cargar el proyecto
+                    new ManipuladorTreeView().ChargeTreeView(pathProyecto, treeView1);
+
+
+                    CerrarIntroduccionNombresArchivos();
+                    MessageBox.Show("ARCHIVO CREADO");
+                }
+                else
+                {
+                    MessageBox.Show("Coloque un nombre porfavor");
+                }
+            }
+            else
+            {
+                MessageBox.Show("SELECCIONA UN PROYECTO DE PRIMERO");
+            }
+            
+        }
+
+        private void CerrarIntroduccionNombresArchivos()
+        {
+            textBoxNombreArchivo.Text = "";
+            panelCrearArchivo.Visible = false;
+        }
+
+        private void AparecerIntroduccionNombresProyectos()
+        {
+            panelCrearProyecto.Visible = true;
+            //Lo mostramos al frente
+            panelCrearProyecto.BringToFront();
+        }
+
+        private void CerrarIntroduccionNombresProyectos()
+        {
+            textBoxCrearProyecto1.Text = "";
+            panelCrearProyecto.Visible = false;
+        }
+
+        private void AparecerIntroduccionNombresArchivos()
+        {
+            panelCrearArchivo.Visible = true;
+            //Lo mostramos al frente
+            panelCrearArchivo.BringToFront();
+        }
+
+        private void MostrarArchivo(string path)
+        {
+            string texto = new ManipuladorTreeView().CharSelectedFile(path, treeView1);
+            //Verificamos que si halla encontrado el archivo
+            //De lo contrario no mostrara nada
+            if (texto != null)
+            {
+                //Obtenemos el texto del arbol seleccionado 
+                richTextBoxCuadroCompilacion.Text = texto;
+                //Mostramos el panel donde esta el analizador
+                panelAnalizador.Visible = true;
+            }
+            else
+            {
+                panelAnalizador.Visible = false;
+                richTextBoxCuadroCompilacion.Text = "";
+
+            }
+        }
+
+        private void buttonRetrocederArchivo_Click(object sender, EventArgs e)
+        {
+            CerrarIntroduccionNombresArchivos();
+        }
+
+        private void buttonCrearProyecto1_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(textBoxCrearProyecto1.Text) || !string.IsNullOrEmpty(textBoxCrearProyecto1.Text))
+            {
+                //Obtenemos el nombre del archivo nuevo
+                string nombreProyecto = textBoxCrearProyecto1.Text;
+
+
+                string nuevaPath = new ManipuladorProyecto().CreateProyecto(nombreProyecto);
+
+                if (nuevaPath != null)
+                {
+                    pathProyecto = nuevaPath;
+                    //Volvemos a cargar el proyecto
+                    new ManipuladorTreeView().ChargeTreeView(pathProyecto, treeView1);
+                    CerrarIntroduccionNombresProyectos();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Coloque un nombre porfavor");
+            }
+        }
+
+        private void buttonRetrocederCrearProyecto_Click(object sender, EventArgs e)
+        {
+            CerrarIntroduccionNombresProyectos();
+        }
+
+        private void buttonCrearProyecto_Click(object sender, EventArgs e)
+        {
+                AparecerIntroduccionNombresProyectos();
+        }
+
+        private void buttonEliminarProyecto_Click(object sender, EventArgs e)
+        {
+            if (treeView1.Nodes.Count != 0)
+            {
+                new ManipuladorProyecto().EliminarProyecto(pathProyecto);
+                pathProyecto = "";
+                treeView1.Nodes.Clear();
+                richTextBoxCuadroCompilacion.Text = "";
+                richTextBoxCuadroError.Text = "";
+                panelAnalizador.Visible = false;
+            }
+            else
+            {
+                MessageBox.Show("SELECCIONA UN PROYECTO");
+            }
+                
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

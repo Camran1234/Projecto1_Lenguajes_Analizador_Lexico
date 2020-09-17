@@ -10,6 +10,11 @@ namespace Proyecto1_AnalizadorLexico.Archivo
 {
     class ManipuladorTreeView
     {
+        /// <summary>
+        /// Limpia y establece los nuevos nodos del proyecto
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="treeView1"></param>
         internal void ChargeTreeView(string path, TreeView treeView1)
         {
             //Limpiamos todos los nodos del arbol
@@ -28,6 +33,7 @@ namespace Proyecto1_AnalizadorLexico.Archivo
             }
         }
 
+        //Cargamos el archivo indicado del Objeto TreeView
         internal string CharSelectedFile(string path, TreeView treeView1)
         {
             //Corroboramos que no seleccione un directorio y exista

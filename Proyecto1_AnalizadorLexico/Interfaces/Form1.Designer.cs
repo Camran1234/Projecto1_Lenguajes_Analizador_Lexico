@@ -40,9 +40,21 @@
             this.buttonSeleccionarProyecto = new System.Windows.Forms.Button();
             this.buttonCrearProyecto = new System.Windows.Forms.Button();
             this.buttonEliminarProyecto = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonCrearArchivo = new System.Windows.Forms.Button();
             this.buttonEliminarArchivo = new System.Windows.Forms.Button();
+            this.panelCrearArchivo = new System.Windows.Forms.Panel();
+            this.textBoxNombreArchivo = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonCrearArchivo1 = new System.Windows.Forms.Button();
+            this.buttonRetrocederArchivo = new System.Windows.Forms.Button();
+            this.panelCrearProyecto = new System.Windows.Forms.Panel();
+            this.buttonRetrocederCrearProyecto = new System.Windows.Forms.Button();
+            this.buttonCrearProyecto1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxCrearProyecto1 = new System.Windows.Forms.TextBox();
             this.panelAnalizador.SuspendLayout();
+            this.panelCrearArchivo.SuspendLayout();
+            this.panelCrearProyecto.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBoxCuadroCompilacion
@@ -103,7 +115,7 @@
             this.panelAnalizador.Controls.Add(this.richTextBoxCuadroError);
             this.panelAnalizador.Controls.Add(this.button1);
             this.panelAnalizador.Controls.Add(this.buttonCompilar);
-            this.panelAnalizador.Location = new System.Drawing.Point(319, 11);
+            this.panelAnalizador.Location = new System.Drawing.Point(422, 11);
             this.panelAnalizador.Margin = new System.Windows.Forms.Padding(2);
             this.panelAnalizador.Name = "panelAnalizador";
             this.panelAnalizador.Size = new System.Drawing.Size(853, 560);
@@ -168,6 +180,7 @@
             this.buttonCrearProyecto.TabIndex = 9;
             this.buttonCrearProyecto.Text = "Crear Proyecto";
             this.buttonCrearProyecto.UseVisualStyleBackColor = true;
+            this.buttonCrearProyecto.Click += new System.EventHandler(this.buttonCrearProyecto_Click);
             // 
             // buttonEliminarProyecto
             // 
@@ -177,33 +190,143 @@
             this.buttonEliminarProyecto.TabIndex = 10;
             this.buttonEliminarProyecto.Text = "Eliminar Proyecto";
             this.buttonEliminarProyecto.UseVisualStyleBackColor = true;
+            this.buttonEliminarProyecto.Click += new System.EventHandler(this.buttonEliminarProyecto_Click);
             // 
-            // button3
+            // buttonCrearArchivo
             // 
-            this.button3.Location = new System.Drawing.Point(187, 242);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 42);
-            this.button3.TabIndex = 12;
-            this.button3.Text = "Crear Archivo";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonCrearArchivo.Location = new System.Drawing.Point(184, 210);
+            this.buttonCrearArchivo.Name = "buttonCrearArchivo";
+            this.buttonCrearArchivo.Size = new System.Drawing.Size(75, 42);
+            this.buttonCrearArchivo.TabIndex = 12;
+            this.buttonCrearArchivo.Text = "Crear Archivo";
+            this.buttonCrearArchivo.UseVisualStyleBackColor = true;
+            this.buttonCrearArchivo.Click += new System.EventHandler(this.button3_Click);
             // 
             // buttonEliminarArchivo
             // 
-            this.buttonEliminarArchivo.Location = new System.Drawing.Point(187, 290);
+            this.buttonEliminarArchivo.Location = new System.Drawing.Point(184, 258);
             this.buttonEliminarArchivo.Name = "buttonEliminarArchivo";
             this.buttonEliminarArchivo.Size = new System.Drawing.Size(75, 42);
             this.buttonEliminarArchivo.TabIndex = 9;
             this.buttonEliminarArchivo.Text = "Eliminar Archivo";
             this.buttonEliminarArchivo.UseVisualStyleBackColor = true;
+            this.buttonEliminarArchivo.Click += new System.EventHandler(this.buttonEliminarArchivo_Click);
+            // 
+            // panelCrearArchivo
+            // 
+            this.panelCrearArchivo.BackColor = System.Drawing.SystemColors.Info;
+            this.panelCrearArchivo.Controls.Add(this.buttonRetrocederArchivo);
+            this.panelCrearArchivo.Controls.Add(this.buttonCrearArchivo1);
+            this.panelCrearArchivo.Controls.Add(this.label1);
+            this.panelCrearArchivo.Controls.Add(this.textBoxNombreArchivo);
+            this.panelCrearArchivo.Location = new System.Drawing.Point(184, 306);
+            this.panelCrearArchivo.Name = "panelCrearArchivo";
+            this.panelCrearArchivo.Size = new System.Drawing.Size(214, 131);
+            this.panelCrearArchivo.TabIndex = 13;
+            // 
+            // textBoxNombreArchivo
+            // 
+            this.textBoxNombreArchivo.Location = new System.Drawing.Point(3, 45);
+            this.textBoxNombreArchivo.MaximumSize = new System.Drawing.Size(208, 20);
+            this.textBoxNombreArchivo.MinimumSize = new System.Drawing.Size(208, 20);
+            this.textBoxNombreArchivo.Name = "textBoxNombreArchivo";
+            this.textBoxNombreArchivo.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.textBoxNombreArchivo.Size = new System.Drawing.Size(208, 20);
+            this.textBoxNombreArchivo.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(47, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(119, 16);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Nombre Archivo";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // buttonCrearArchivo1
+            // 
+            this.buttonCrearArchivo1.Location = new System.Drawing.Point(0, 80);
+            this.buttonCrearArchivo1.Name = "buttonCrearArchivo1";
+            this.buttonCrearArchivo1.Size = new System.Drawing.Size(75, 23);
+            this.buttonCrearArchivo1.TabIndex = 14;
+            this.buttonCrearArchivo1.Text = "Crear";
+            this.buttonCrearArchivo1.UseVisualStyleBackColor = true;
+            this.buttonCrearArchivo1.Click += new System.EventHandler(this.buttonCrearArchivo1_Click);
+            // 
+            // buttonRetrocederArchivo
+            // 
+            this.buttonRetrocederArchivo.Location = new System.Drawing.Point(177, 80);
+            this.buttonRetrocederArchivo.Name = "buttonRetrocederArchivo";
+            this.buttonRetrocederArchivo.Size = new System.Drawing.Size(34, 23);
+            this.buttonRetrocederArchivo.TabIndex = 15;
+            this.buttonRetrocederArchivo.Text = "<-";
+            this.buttonRetrocederArchivo.UseVisualStyleBackColor = true;
+            this.buttonRetrocederArchivo.Click += new System.EventHandler(this.buttonRetrocederArchivo_Click);
+            // 
+            // panelCrearProyecto
+            // 
+            this.panelCrearProyecto.BackColor = System.Drawing.SystemColors.Info;
+            this.panelCrearProyecto.Controls.Add(this.buttonRetrocederCrearProyecto);
+            this.panelCrearProyecto.Controls.Add(this.buttonCrearProyecto1);
+            this.panelCrearProyecto.Controls.Add(this.label2);
+            this.panelCrearProyecto.Controls.Add(this.textBoxCrearProyecto1);
+            this.panelCrearProyecto.Location = new System.Drawing.Point(184, 443);
+            this.panelCrearProyecto.Name = "panelCrearProyecto";
+            this.panelCrearProyecto.Size = new System.Drawing.Size(214, 131);
+            this.panelCrearProyecto.TabIndex = 14;
+            // 
+            // buttonRetrocederCrearProyecto
+            // 
+            this.buttonRetrocederCrearProyecto.Location = new System.Drawing.Point(177, 80);
+            this.buttonRetrocederCrearProyecto.Name = "buttonRetrocederCrearProyecto";
+            this.buttonRetrocederCrearProyecto.Size = new System.Drawing.Size(34, 23);
+            this.buttonRetrocederCrearProyecto.TabIndex = 15;
+            this.buttonRetrocederCrearProyecto.Text = "<-";
+            this.buttonRetrocederCrearProyecto.UseVisualStyleBackColor = true;
+            this.buttonRetrocederCrearProyecto.Click += new System.EventHandler(this.buttonRetrocederCrearProyecto_Click);
+            // 
+            // buttonCrearProyecto1
+            // 
+            this.buttonCrearProyecto1.Location = new System.Drawing.Point(0, 80);
+            this.buttonCrearProyecto1.Name = "buttonCrearProyecto1";
+            this.buttonCrearProyecto1.Size = new System.Drawing.Size(75, 23);
+            this.buttonCrearProyecto1.TabIndex = 14;
+            this.buttonCrearProyecto1.Text = "Crear";
+            this.buttonCrearProyecto1.UseVisualStyleBackColor = true;
+            this.buttonCrearProyecto1.Click += new System.EventHandler(this.buttonCrearProyecto1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(47, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(129, 16);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Nombre Proyecto";
+            // 
+            // textBoxCrearProyecto1
+            // 
+            this.textBoxCrearProyecto1.Location = new System.Drawing.Point(3, 45);
+            this.textBoxCrearProyecto1.MaximumSize = new System.Drawing.Size(208, 20);
+            this.textBoxCrearProyecto1.MinimumSize = new System.Drawing.Size(208, 20);
+            this.textBoxCrearProyecto1.Name = "textBoxCrearProyecto1";
+            this.textBoxCrearProyecto1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.textBoxCrearProyecto1.Size = new System.Drawing.Size(208, 20);
+            this.textBoxCrearProyecto1.TabIndex = 0;
             // 
             // FormEntorno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1183, 582);
+            this.ClientSize = new System.Drawing.Size(1286, 582);
+            this.Controls.Add(this.panelCrearProyecto);
+            this.Controls.Add(this.panelCrearArchivo);
             this.Controls.Add(this.buttonEliminarArchivo);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.buttonCrearArchivo);
             this.Controls.Add(this.buttonEliminarProyecto);
             this.Controls.Add(this.buttonCrearProyecto);
             this.Controls.Add(this.buttonSeleccionarProyecto);
@@ -211,10 +334,16 @@
             this.Controls.Add(this.panelAnalizador);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(1306, 625);
+            this.MinimumSize = new System.Drawing.Size(1306, 625);
             this.Name = "FormEntorno";
             this.Text = "IDE";
             this.panelAnalizador.ResumeLayout(false);
             this.panelAnalizador.PerformLayout();
+            this.panelCrearArchivo.ResumeLayout(false);
+            this.panelCrearArchivo.PerformLayout();
+            this.panelCrearProyecto.ResumeLayout(false);
+            this.panelCrearProyecto.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -232,9 +361,19 @@
         private System.Windows.Forms.Button buttonSeleccionarProyecto;
         private System.Windows.Forms.Button buttonCrearProyecto;
         private System.Windows.Forms.Button buttonEliminarProyecto;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonCrearArchivo;
         private System.Windows.Forms.Button buttonEliminarArchivo;
         private System.Windows.Forms.Button buttonGuardar;
+        private System.Windows.Forms.Panel panelCrearArchivo;
+        private System.Windows.Forms.Button buttonRetrocederArchivo;
+        private System.Windows.Forms.Button buttonCrearArchivo1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxNombreArchivo;
+        private System.Windows.Forms.Panel panelCrearProyecto;
+        private System.Windows.Forms.Button buttonRetrocederCrearProyecto;
+        private System.Windows.Forms.Button buttonCrearProyecto1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxCrearProyecto1;
     }
 }
 
