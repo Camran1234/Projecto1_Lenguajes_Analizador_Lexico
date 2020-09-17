@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Proyecto1_AnalizadorLexico.Archivo
+{
+    class Error
+    {
+        private string cadena;
+        private string nombreGramatica;
+        private int indexPosicion;
+        
+        /// <summary>
+        /// Clase que sirve para indicar errores almacenando la cadena, token al que pertenecia y la posicion
+        /// en el texto donde se encontraba
+        /// </summary>
+        /// <param name="cadena"></param>
+        /// <param name="nombreGramatica"></param>
+        /// <param name="indexPosicion"></param>
+        public Error(string cadena, string nombreGramatica, int indexPosicion)
+        {
+            this.cadena = cadena;
+            this.nombreGramatica = nombreGramatica;
+            this.indexPosicion = indexPosicion;
+        }
+
+        /// <summary>
+        /// Devuelve el error con especificaciones donde se encuentra el error el token esperado y la posicion en 
+        /// index de objeto richTextBox en donde se encuentra
+        /// </summary>
+        /// <returns></returns>
+        public string Message()
+        {
+            return ("Error: " + cadena + ", tokenEsperado: " + nombreGramatica + ", linea: "+indexPosicion+"\n");
+        }
+
+        /// <summary>
+        ///  Cambia el index de este objeto y lo transforma en objeto segun el texto incluido en la 
+        ///  instancia del RichTextBox 
+        /// </summary>
+        /// <param name="richTextBox"></param>
+        internal void ChangeIndexToLine(RichTextBox richTextBox)
+        {
+            int linea = 1;
+            string texto = richTextBox.Text;
+            //Transformamos el index a linea
+            for(int indexChar = 0; indexChar < texto.Length; indexChar++)
+            {
+                if(texto[indexChar] == '\n')
+                {
+                    linea++;
+                }
+                if(indexPosicion == indexChar)
+                {
+                    break;
+                }
+            }
+
+            indexPosicion = linea;
+        }
+    }
+}

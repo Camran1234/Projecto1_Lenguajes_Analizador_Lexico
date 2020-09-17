@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{00F5ECDB-BA49-45CA-AB6E-95A93AE62569}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Proyecto1_AnalizadorLexico</RootNamespace>
+    <AssemblyName>Proyecto1_AnalizadorLexico</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analizador_Lexico\Lenguaje.cs" />
+    <Compile Include="Analizador_Lexico\Gramatica.cs" />
+    <Compile Include="Analizador_Lexico\Lectura.cs" />
+    <Compile Include="Analizador_Lexico\PintarElemento.cs" />
+    <Compile Include="Archivo\Error.cs" />
+    <Compile Include="Archivo\ManipuladorArchivo.cs" />
+    <Compile Include="Archivo\ManipuladorProyecto.cs" />
+    <Compile Include="Archivo\ManipuladorTreeView.cs" />
+    <Compile Include="Archivo\PanelesAuxiliares.cs" />
+    <Compile Include="Gramaticas\And.cs" />
+    <Compile Include="Gramaticas\Boolean_.cs" />
+    <Compile Include="Gramaticas\Cadena.cs" />
+    <Compile Include="Gramaticas\Chart.cs" />
+    <Compile Include="Gramaticas\Colon.cs" />
+    <Compile Include="Gramaticas\ComentarioUnaLinea.cs" />
+    <Compile Include="Gramaticas\ComentarioVariasLineas.cs" />
+    <Compile Include="Gramaticas\Comparacion.cs" />
+    <Compile Include="Gramaticas\Decimal_.cs" />
+    <Compile Include="Gramaticas\Desde.cs" />
+    <Compile Include="Gramaticas\Diferente.cs" />
+    <Compile Include="Gramaticas\Disminuir.cs" />
+    <Compile Include="Gramaticas\Division.cs" />
+    <Compile Include="Gramaticas\Entero.cs" />
+    <Compile Include="Gramaticas\Hacer.cs" />
+    <Compile Include="Gramaticas\Hasta.cs" />
+    <Compile Include="Gramaticas\Igual.cs" />
+    <Compile Include="Gramaticas\Incrementar.cs" />
+    <Compile Include="Gramaticas\Incremento.cs" />
+    <Compile Include="Gramaticas\Mayor.cs" />
+    <Compile Include="Gramaticas\MayorIgual.cs" />
+    <Compile Include="Gramaticas\Menor.cs" />
+    <Compile Include="Gramaticas\MenorIgual.cs" />
+    <Compile Include="Gramaticas\Mientras.cs" />
+    <Compile Include="Gramaticas\Multiplicacion.cs" />
+    <Compile Include="Gramaticas\Negacion.cs" />
+    <Compile Include="Gramaticas\Or.cs" />
+    <Compile Include="Gramaticas\ParentesisAbrir.cs" />
+    <Compile Include="Gramaticas\ParentesisCerrar.cs" />
+    <Compile Include="Gramaticas\Resta.cs" />
+    <Compile Include="Gramaticas\Si.cs" />
+    <Compile Include="Gramaticas\Sino.cs" />
+    <Compile Include="Gramaticas\Sino_Si.cs" />
+    <Compile Include="Gramaticas\Suma.cs" />
+    <Compile Include="Informacion_Gramaticas\InfoGramatica.cs" />
+    <Compile Include="Informacion_Gramaticas\State.cs" />
+    <Compile Include="Informacion_Gramaticas\Transicion.cs" />
+    <Compile Include="Interfaces\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\MostradorPosicion.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Interfaces\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

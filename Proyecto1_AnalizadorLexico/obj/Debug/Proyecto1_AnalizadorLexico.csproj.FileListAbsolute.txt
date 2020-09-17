@@ -1,0 +1,10 @@
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\bin\Debug\Proyecto1_AnalizadorLexico.exe.config
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\bin\Debug\Proyecto1_AnalizadorLexico.exe
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\bin\Debug\Proyecto1_AnalizadorLexico.pdb
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.csprojAssemblyReference.cache
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.Properties.Resources.resources
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.csproj.GenerateResource.cache
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.csproj.CoreCompileInputs.cache
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.exe
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.pdb
+C:\Users\Camran1234\source\repos\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.FormEntorno.resources
